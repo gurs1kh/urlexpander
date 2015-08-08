@@ -1,0 +1,34 @@
+
+{% extends "urlexpander/base.html" %}
+
+{% block content %}
+
+<form action="/add" method="POST" class="post-form">{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit" class="add btn btn-default">Add</button>
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th>Original URL</th>
+			<th>Expanded URL</th>
+			<th>Title</th>
+			<th>Status Code</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for entry in entries %}
+		<tr>
+			<td>{{ entry.short_url }}</td>
+			<td>{{ entry.long_url }}</td>
+			<td>{{ entry.title }}</td>
+			<td>{{ entry.status }}</td>
+			<td><button onclick="location.href='/delete/{{entry.id}}'">Delete</button></td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+{% endblock content %}
