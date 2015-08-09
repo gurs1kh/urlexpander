@@ -15,8 +15,6 @@ def url_add(request):
 	form = UrlForm(request.POST)
 	if form.is_valid():
 		entry = form.save(commit=False)
-		if not entry.short_url.startswith("http"):
-			entry.short_url = "http://" + entry.short_url
 		r = requests.get(entry.short_url)
 		entry.long_url = r.url
 		entry.status = r.status_code
@@ -25,5 +23,5 @@ def url_add(request):
 	return redirect('myapp.views.url_list')
 
 def url_delete(request, id):
-	Entry.objects.get(pk=id).delete()
-	return redirect('myapp.views.url_list')
+	entr
+	return redirect('blog.views.url_list')

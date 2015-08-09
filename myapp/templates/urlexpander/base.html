@@ -1,9 +1,22 @@
+{% load staticfiles %}
 <html>
 	<head>
 		<title>URL Expander</title>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link href='http://fonts.googleapis.com/css?family=Fugaz+One' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="{% static "css/urlexpander.css" %}">
 	</head>
 	<body>
-		{% block content %}
-		{% endblock %}
+		<div class="container">
+			<header class="row">
+				<h1><a href="">URL Expander</a></h1>
+			</header>
+			<main class="row">
+				{% block content %}
+				{% endblock %}
+			</main>
+		</div>
 	</body>
 </html>
+

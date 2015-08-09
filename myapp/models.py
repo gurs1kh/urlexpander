@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-
 class Entry(models.Model):
 	short_url = models.CharField(max_length=2083)
 	long_url = models.CharField(max_length=2083)
