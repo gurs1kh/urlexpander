@@ -1,0 +1,47 @@
+{% extends "urlexpander/base.html" %}
+
+{% block content %}
+
+<form action="/add" method="POST" class="post-form">{% csrf_token %}
+	{{ form.short_url{{ form.short_url }}
+ }}
+	<button type="submit" class="add btn btn-default">Add</button>
+</form>
+<form class="form-horizontal">
+	<fieldset>
+		<div class="form-group">
+			<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="url-input">URL</label>  
+			<div class="col-xs-4 col-sm-4 col-md-4">
+				<input type="text" id="url-input" name="url-input" placeholder="http://..." class="form-control input-md" />
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4">
+				<button type="submit" id="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</div>
+	</fieldset>
+</form>
+<div class="table-responsive">
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>Original URL</th>
+				<th>Expanded URL</th>
+				<th>Title</th>
+				<th>Status Code</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for entry in entries %}
+			<tr>
+				<td>{{ entry.short_url }}</td>
+				<td>{{ entry.long_url }}</td>
+				<td>{{ entry.title }}</td>
+				<td>{{ entry.status }}</td>
+				<td><button onclick="location.href='/delete/{{entry.id}}'">Delete</button></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock content %}
