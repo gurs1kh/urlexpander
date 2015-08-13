@@ -6,7 +6,6 @@ from .forms import UrlForm
 import requests
 from bs4 import BeautifulSoup
 
-@login_required(login_url="/urlexpander/login")
 def url_list(request):
 	entries = Entry.objects.order_by('created_date')
 	form = UrlForm()
@@ -14,6 +13,7 @@ def url_list(request):
 
 @login_required(login_url="/urlexpander/login")
 def url_add(request):
+
 	form = UrlForm(request.POST)
 	if form.is_valid():
 		entry = form.save(commit=False)
@@ -26,7 +26,7 @@ def url_add(request):
 		entry.save()
 	return redirect('myapp.views.url_list')
 
-@login_required(login_url="/urlexpander/login")
+@login_required(login_url="login")
 def url_delete(request, id):
 	Entry.objects.get(pk=id).delete()
 	return redirect('myapp.views.url_list')

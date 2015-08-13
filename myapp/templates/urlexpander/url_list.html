@@ -1,7 +1,7 @@
 {% extends "urlexpander/base.html" %}
 
 {% block content %}
-<form action="add" method="POST" class="form-horizontal">{% csrf_token %}
+<form action="/urlexpander/add" method="POST" class="form-horizontal">{% csrf_token %}
 	<fieldset>
 		<div class="form-group">
 			<label class="col-xs-4 col-sm-4 col-md-4 control-label" for="url-input">URL</label>  
@@ -32,7 +32,7 @@
 				<td>{{ entry.long_url }}</td>
 				<td>{{ entry.title }}</td>
 				<td>{{ entry.status }}</td>
-				<td><button onclick="location.href='delete/{{entry.id}}'">Delete</button></td>
+				<td><button onclick="location.href='/urlexpander/delete/{{entry.id}}'">Delete</button></td>
 			</tr>
 		{% endfor %}
 		</tbody>

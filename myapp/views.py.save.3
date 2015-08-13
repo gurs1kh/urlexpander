@@ -1,18 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
 from .models import Entry
 from .forms import UrlForm
 import requests
 from bs4 import BeautifulSoup
 
-@login_required(login_url="/urlexpander/login")
 def url_list(request):
 	entries = Entry.objects.order_by('created_date')
 	form = UrlForm()
 	return render(request, 'urlexpander/url_list.html', {'entries': entries, 'form': form})
 
-@login_required(login_url="/urlexpander/login")
+@login_required(login_url="login")
 def url_add(request):
 	form = UrlForm(request.POST)
 	if form.is_valid():
@@ -26,7 +27,14 @@ def url_add(request):
 		entry.save()
 	return redirect('myapp.views.url_list')
 
-@login_required(login_url="/urlexpander/login")
+@login_required
 def url_delete(request, id):
 	Entry.objects.get(pk=id).delete()
 	return redirect('myapp.views.url_list')
+
+def auth_user(request):
+	if not request.user.is_authenticated():
+		return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+	else:
+		users = Users.objects.all()
+		return render(request, 'userdir/user_list.html', {'users': users})
