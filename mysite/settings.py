@@ -1,3 +1,4 @@
+
 """
 Django settings for mysite project.
 
@@ -37,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'storages',
     'myapp',
 )
 
@@ -102,6 +104,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+from mysite.credentials import *
+AWS_STORAGE_BUCKET_NAME = 'singhm5-urlexpander'
 
-STATIC_URL = '/static/urlexpander/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/urlexpander')
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+STATIC_URL = 'http://s3.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME + '/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

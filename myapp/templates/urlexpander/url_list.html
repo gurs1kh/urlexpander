@@ -22,6 +22,7 @@
 				<th>Expanded URL</th>
 				<th>Title</th>
 				<th>Status Code</th>
+				<th>Screenshot</th>
 				<th>Delete</th>
 			</tr>
 		</thead>
@@ -32,7 +33,8 @@
 				<td>{{ entry.long_url }}</td>
 				<td>{{ entry.title }}</td>
 				<td>{{ entry.status }}</td>
-				<td><button onclick="location.href='/urlexpander/delete/{{entry.id}}'">Delete</button></td>
+				<td><a href="{{ entry.image }}">View</a></td>
+				<td><button onclick="location.href='/urlexpander/delete/{{ entry.id }}'">Delete</button></td>
 			</tr>
 		{% endfor %}
 		</tbody>

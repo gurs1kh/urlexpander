@@ -5,6 +5,11 @@ from .models import Entry
 from .forms import UrlForm
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
+import os
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
+from mysite import settings
 
 @login_required(login_url="/urlexpander/login")
 def url_list(request):
@@ -23,6 +28,21 @@ def url_add(request):
 		entry.long_url = r.url
 		entry.status = r.status_code
 		entry.title = BeautifulSoup(r.content).title.text
+		
+		driver = webdriver.PhantomJS(service_log_path=os.path.devnull)
+		driver.get(entry.short_url)
+		filename = entry.title.lower().replace(" ", "-")
+		driver.save_screenshot('/tmp/' + filename + '.png')
+		driver.close()
+		s3 = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+		bucket = s3.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+		key = Key(bucket)
+		key.key = '/img/' + filename + '.png'
+		key.set_contents_from_filename('/tmp/' + filename + '.png')
+		bucket.set_acl('public-read', '/img/' + filename + '.png')
+		os.remove('/tmp/' + filename + '.png')
+		entry.image = settings.STATIC_URL + "img/" + filename + ".png"
+		
 		entry.save()
 	return redirect('myapp.views.url_list')
 

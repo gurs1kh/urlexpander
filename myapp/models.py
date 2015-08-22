@@ -7,7 +7,8 @@ class Entry(models.Model):
 	status = models.CharField(max_length=3)
 	title = models.TextField()
 	created_date = models.DateTimeField(default=timezone.now)
-	
+	image = models.CharField(max_length=2083)
+		
 	def publish(self):
 		self.save()
 	
