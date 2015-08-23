@@ -24,3 +24,7 @@ header h1 a:hover {
 .table-hover tbody tr:hover td {
     background-color: #00FFFF;
 }
+
+.logout {
+	float: right;
+}
